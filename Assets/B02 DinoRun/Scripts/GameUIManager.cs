@@ -8,6 +8,7 @@ public class GameUIManager : MonoBehaviour
 {
 
     public TextMeshProUGUI gameOverText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,4 +20,7 @@ public class GameUIManager : MonoBehaviour
     {
         gameOverText.enabled = true;
     }
+   
+
+  
 }
