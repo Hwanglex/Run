@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
+
 
 public class Dino : MonoBehaviour
 {
@@ -12,27 +13,33 @@ public class Dino : MonoBehaviour
         Run,
         Hit
     }
-
-    public float startJumpPower;
-    public float JumpPower;
-    public bool isGround;
-    public bool isJumpKey;
-    public UnityEvent onHit;
+   
+    private  float startJumpPower =7f;
+    private  float jumpPower =1f;
+    private bool isGround = false;
+    private bool isJumpKey = false;
+    
     Rigidbody2D rigid;
     Animator anim;
+
+    public GameUIManager gameUIManager;
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
 
+        isGround = true;
+        ChangeAnim(State.Run);
+
     }
 
 
     void Update()
-    {    // 1. 기본 점프
-        if (!GameManager.isLive)
+    {   
+        if (!GameManager.IsLive)
             return;
-        if (Input.GetButtonDown("Jump")&&isGround) //기본점프(=숏 점프)
+        if (Input.GetButtonDown("Jump")&&isGround) 
         {
             rigid.AddForce(Vector2.up * startJumpPower, ForceMode2D.Impulse);
             ChangeAnim(State.Jump);
@@ -46,12 +53,12 @@ public class Dino : MonoBehaviour
     // 1.롱 점프
     void FixedUpdate()
     {
-        if (!GameManager.isLive)
+        if (!GameManager.IsLive)
             return;
         if (isJumpKey&& !isGround)
         {
-            JumpPower = Mathf.Lerp(JumpPower, 0, 0.1f);
-            rigid.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
+            jumpPower = Mathf.Lerp(jumpPower, 0, 0.1f);
+            rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         }
     }
 
@@ -62,17 +69,16 @@ public class Dino : MonoBehaviour
         if (!isGround)
         {
             ChangeAnim(State.Run);
-            JumpPower = 1;
+            jumpPower = 1;
         }
         isGround = true;
     }
 
    void OnCollisionExit2D(Collision2D collision)
     {
+
         ChangeAnim(State.Jump);
         isGround = false;
-
-
     }
 
     // 3. 장애물 터치 (트리거 충돌 이벤트)
@@ -80,11 +86,10 @@ public class Dino : MonoBehaviour
     {
         rigid.simulated = false;
         ChangeAnim(State.Hit);
-        onHit.Invoke();
-        
+
+        GameManager.GameOver();
+        gameUIManager.ShowGameOver();
     }
-    
-    
     void ChangeAnim(State state)
     {
         anim.SetInteger("State", (int)state);

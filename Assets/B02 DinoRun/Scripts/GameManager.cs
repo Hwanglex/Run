@@ -1,33 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     const float ORIGIN_SPEED = 3;
     //상수로표현할때는 앞에 const를 붙임
-    public static float globalSpeed;
-    public static float score;
-    public static bool isLive;
-    public GameObject uIOver;
-    void Start()
+    private static float globalSpeed;
+    private static float score;
+    private static bool isLive;
+ 
+
+    //public static float GlobalSpeed => _GlobalSpeed;
+
+    
+
+    public static float GlobalSpeed
     {
-        isLive = true;
+        get { return globalSpeed; }
     }
 
-   
+    public static bool IsLive
+    {
+        
+        get { return isLive; }
+        set { isLive = value; }
+    }
+
+    
+    void Start()
+    {
+        IsLive = true;
+    }
+
+
     void Update()
     {
-        if (!isLive)
+        if (!IsLive)
             return;
-         score += Time.deltaTime * 2;
-            globalSpeed = ORIGIN_SPEED + score * 0.01f;
+
+        score += Time.deltaTime * 2;
+        globalSpeed = ORIGIN_SPEED + score * 0.01f;
+        Debug.Log("Scroe" + score);
         
-    
     }
-    public void GameOver()
+
+    public static void GameOver()
     {
-        //uIOver.SetActive(false);
-        isLive = false;
+        IsLive = false;
     }
 }

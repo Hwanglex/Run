@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class Scroller : MonoBehaviour
 {
-    public int count;
-    public float speedRate;
+    private float speedRate=1;
 
+   
     void Start()
     {
-        count = transform.childCount;
+
     }
 
    
     void Update()
     {
-        if (!GameManager.isLive)
+        if (!GameManager.IsLive)
             return;
         
-            float totalSpeed = GameManager.globalSpeed * speedRate * Time.deltaTime * -1f;
+            float totalSpeed = GameManager.GlobalSpeed * speedRate * Time.deltaTime * -1f;
             transform.Translate(totalSpeed, 0, 0);
-        
+        Debug.Log("totalspeed:" + totalSpeed);
      
     }
 }
