@@ -6,21 +6,61 @@ using UnityEngine.UI;
 
 public class GameUIManager : MonoBehaviour
 {
-
+    private static GameUIManager _instance;
     public TextMeshProUGUI gameOverText;
+    public static GameUIManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<GameUIManager>();
+                if (_instance == null)
+                {
+                    GameObject obj = new GameObject();
+                    _instance = obj.AddComponent<GameUIManager>();
+                }
+            }
+            return _instance;
+        }
+    }
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        _instance = this;
+        DontDestroyOnLoad(this.gameObject);
+    }
     void Start()
     {
         gameOverText.enabled = false;
     }
 
-    // Update is called once per frame
     public void ShowGameOver()
     {
         gameOverText.enabled = true;
     }
-   
 
-  
 }
+
+
+
+
+
+
+
+//public class GameUIManager : MonoBehaviour
+//{
+
+//    public TextMeshProUGUI gameOverText;
+
+// Start is called before the first frame update
+
+
+
+
+//}

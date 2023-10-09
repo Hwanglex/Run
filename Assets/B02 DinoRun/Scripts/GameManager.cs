@@ -3,31 +3,49 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class GameManager : MonoBehaviour
 {
-    const float ORIGIN_SPEED = 3;
-    //상수로표현할때는 앞에 const를 붙임
-    private static float globalSpeed = 0f;
-    private static float score = 0f;
-    private static bool isLive = false;
- 
+    private static GameManager _instance;
+    private const float ORIGIN_SPEED = 3;
+    private const float SSPEED = 1f;
+    private const float GSPEED = 0.01f;
+    private float globalSpeed;
+    private float score;
+    private bool isLive = false;
+    public bool IsLive { get { return isLive; } set { isLive = value; } }
+    public float GlobalSpeed => globalSpeed;
 
-    //public static float GlobalSpeed => _GlobalSpeed;
-
-    
-
-    public static float GlobalSpeed
+    public static GameManager Instance
     {
-        get { return globalSpeed; }
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<GameManager>();
+                if (_instance == null)
+                {
+                    GameObject singletonObj = new GameObject("GameManager");
+                    _instance = singletonObj.AddComponent<GameManager>();
+                }
+            }
+            return _instance;
+        }
     }
 
-    public static bool IsLive
+    private void Awake()
     {
-        
-        get { return isLive; }
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (_instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
 
-    
     void Start()
     {
         isLive = true;
@@ -39,14 +57,30 @@ public class GameManager : MonoBehaviour
         if (!isLive)
             return;
 
-        score += Time.deltaTime * 2;
-        globalSpeed = ORIGIN_SPEED + score * 0.01f;
+        score += Time.deltaTime * SSPEED;
+        globalSpeed = ORIGIN_SPEED + score * GSPEED;
         Debug.Log("Scroe" + score);
-        
+
+    }
+    
+  
+    public void GameOver()
+    {
+        IsLive = false;
     }
 
-    public static void GameOver()
-    {
-        isLive = false;
-    }
+    // 기타 게임 매니저 코드 (게임 상태 관리, UI 업데이트, 이벤트 처리 등)
 }
+
+//public class GameManager : MonoBehaviour
+//{
+
+
+
+
+
+//    public static void GameOver()
+//    {
+//        isLive = false;
+//    }
+//}

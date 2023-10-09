@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Reposition : MonoBehaviour
 {
-     void LateUpdate()
+    private const float POSITION = -12;
+    private const float REPOSITION = 24;
+    private const float ZERO = 0;
+    void LateUpdate()
     {
-        if (transform.position.x > -12)
+        if (transform.position.x > POSITION)
             return;
 
-        transform.Translate(24, 0, 0, Space.Self);
+        transform.Translate(REPOSITION, ZERO, ZERO, Space.Self);
         //Àý´ëÁÂÇ¥
     }
 }

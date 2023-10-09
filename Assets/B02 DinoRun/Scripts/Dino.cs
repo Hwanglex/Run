@@ -13,17 +13,18 @@ public class Dino : MonoBehaviour
         Run,
         Hit
     }
-   
-    private  float startJumpPower =7f;
-    private  float jumpPower =1f;
+
+    private const float startJumpPower = 7f;
+    private const float JUMPPOWER = 1f;
+    private const float LERPPOWER = 0.1f;
+    private const float ZERO = 0;
+    private const float ONE = 1;
+    private float jumpPower = JUMPPOWER;
     private bool isGround = false;
     private bool isJumpKey = false;
-    
+
     Rigidbody2D rigid;
     Animator anim;
-
-    public GameUIManager gameUIManager;
-
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -36,28 +37,28 @@ public class Dino : MonoBehaviour
 
 
     void Update()
-    {   
-        if (!GameManager.IsLive)
+    {
+        if (!GameManager.Instance.IsLive)
             return;
-        if (Input.GetButtonDown("Jump")&&isGround) 
+        if (Input.GetButtonDown("Jump") && isGround)
         {
             rigid.AddForce(Vector2.up * startJumpPower, ForceMode2D.Impulse);
             ChangeAnim(State.Jump);
         }
-      if(Input.GetButton("Jump"))
+        if (Input.GetButton("Jump"))
             isJumpKey = true;
-      else
-            isJumpKey= false;
+        else
+            isJumpKey = false;
 
     }
     // 1.ที มกวม
     void FixedUpdate()
     {
-        if (!GameManager.IsLive)
+        if (!GameManager.Instance.IsLive)
             return;
-        if (isJumpKey&& !isGround)
+        if (isJumpKey && !isGround)
         {
-            jumpPower = Mathf.Lerp(jumpPower, 0, 0.1f);
+            jumpPower = Mathf.Lerp(jumpPower, ZERO ,LERPPOWER);
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         }
     }
@@ -69,12 +70,12 @@ public class Dino : MonoBehaviour
         if (!isGround)
         {
             ChangeAnim(State.Run);
-            jumpPower = 1;
+            jumpPower = ONE;
         }
         isGround = true;
     }
 
-   void OnCollisionExit2D(Collision2D collision)
+    void OnCollisionExit2D(Collision2D collision)
     {
 
         ChangeAnim(State.Jump);
@@ -86,9 +87,9 @@ public class Dino : MonoBehaviour
     {
         rigid.simulated = false;
         ChangeAnim(State.Hit);
+        GameManager.Instance.GameOver();
+        GameUIManager.Instance.ShowGameOver();
 
-        GameManager.GameOver();
-        gameUIManager.ShowGameOver();
     }
     void ChangeAnim(State state)
     {
