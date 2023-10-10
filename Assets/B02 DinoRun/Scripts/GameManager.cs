@@ -7,9 +7,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
-    private const float ORIGIN_SPEED = 3;
-    private const float SSPEED = 1f;
-    private const float GSPEED = 0.01f;
+   
     private float globalSpeed;
     private float score;
     private bool isLive = false;
@@ -35,15 +33,6 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (_instance != this)
-        {
-            Destroy(gameObject);
-        }
     }
 
     void Start()
@@ -57,13 +46,13 @@ public class GameManager : MonoBehaviour
         if (!isLive)
             return;
 
-        score += Time.deltaTime * SSPEED;
-        globalSpeed = ORIGIN_SPEED + score * GSPEED;
+        score += Time.deltaTime * Constants.SSPEED;
+        globalSpeed = Constants.ORIGINSPEED + score * Constants.GSPEED;
         Debug.Log("Scroe" + score);
 
     }
-    
-  
+
+
     public void GameOver()
     {
         IsLive = false;
@@ -72,15 +61,4 @@ public class GameManager : MonoBehaviour
     // 기타 게임 매니저 코드 (게임 상태 관리, UI 업데이트, 이벤트 처리 등)
 }
 
-//public class GameManager : MonoBehaviour
-//{
-
-
-
-
-
-//    public static void GameOver()
-//    {
-//        isLive = false;
-//    }
-//}
+//usi

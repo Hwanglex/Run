@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class Scroller : MonoBehaviour
 {
-    private const float SPEEDRATE = 1;
-    private const float MSPEEDRATE = -1f;
-
-    void Start()
+       void Start()
     {
 
     }
@@ -18,9 +15,36 @@ public class Scroller : MonoBehaviour
         if (!GameManager.Instance.IsLive)
             return;
 
-        float totalSpeed = GameManager.Instance.GlobalSpeed * SPEEDRATE * Time.deltaTime * MSPEEDRATE;
+        float totalSpeed = GameManager.Instance.GlobalSpeed * Constants.SPEEDRATE * Time.deltaTime * Constants.MSPEEDRATE;
         transform.Translate(totalSpeed, 0, 0);
         Debug.Log("totalspeed:" + totalSpeed);
 
     }
 }
+
+//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
+
+//public class Scroller : MonoBehaviour
+//{
+//    private float speedRate=1;
+
+
+//    void Start()
+//    {
+
+//    }
+
+
+//    void Update()
+//    {
+//        if (!GameManager.IsLive)
+//            return;
+
+//            float totalSpeed = GameManager.GlobalSpeed * speedRate * Time.deltaTime * -1f;
+//            transform.Translate(totalSpeed, 0, 0);
+//        Debug.Log("totalspeed:" + totalSpeed);
+
+//    }
+//}

@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -50,17 +51,3 @@ public class GameUIManager : MonoBehaviour
 
 
 
-
-
-
-//public class GameUIManager : MonoBehaviour
-//{
-
-//    public TextMeshProUGUI gameOverText;
-
-// Start is called before the first frame update
-
-
-
-
-//}

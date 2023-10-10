@@ -14,14 +14,10 @@ public class Dino : MonoBehaviour
         Hit
     }
 
-    private const float startJumpPower = 7f;
-    private const float JUMPPOWER = 1f;
-    private const float LERPPOWER = 0.1f;
-    private const float ZERO = 0;
-    private const float ONE = 1;
-    private float jumpPower = JUMPPOWER;
+    private float jumpPower = Constants.JUMPPOWER;
     private bool isGround = false;
     private bool isJumpKey = false;
+   
 
     Rigidbody2D rigid;
     Animator anim;
@@ -42,7 +38,7 @@ public class Dino : MonoBehaviour
             return;
         if (Input.GetButtonDown("Jump") && isGround)
         {
-            rigid.AddForce(Vector2.up * startJumpPower, ForceMode2D.Impulse);
+            rigid.AddForce(Vector2.up * Constants.STARTJUMPPOWER, ForceMode2D.Impulse);
             ChangeAnim(State.Jump);
         }
         if (Input.GetButton("Jump"))
@@ -58,7 +54,7 @@ public class Dino : MonoBehaviour
             return;
         if (isJumpKey && !isGround)
         {
-            jumpPower = Mathf.Lerp(jumpPower, ZERO ,LERPPOWER);
+            jumpPower = Mathf.Lerp(jumpPower, Constants.ZERO, Constants.LERPPOWER);
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         }
     }
@@ -70,7 +66,7 @@ public class Dino : MonoBehaviour
         if (!isGround)
         {
             ChangeAnim(State.Run);
-            jumpPower = ONE;
+            jumpPower = Constants.ONE;
         }
         isGround = true;
     }
