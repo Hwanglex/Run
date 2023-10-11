@@ -14,7 +14,7 @@ public class Scroller : MonoBehaviour
     {
         if (!GameManager.Instance.IsLive)
             return;
-
+        GameManager.Instance.UpdateGame(Time.deltaTime);
         float totalSpeed = GameManager.Instance.GlobalSpeed * Constants.SPEEDRATE * Time.deltaTime * Constants.MSPEEDRATE;
         transform.Translate(totalSpeed, 0, 0);
         Debug.Log("totalspeed:" + totalSpeed);

@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 
-public class GameManager : MonoBehaviour
+public class GameManager
 {
     private static GameManager _instance;
    
@@ -20,38 +21,32 @@ public class GameManager : MonoBehaviour
         {
             if (_instance == null)
             {
-                _instance = FindObjectOfType<GameManager>();
-                if (_instance == null)
-                {
-                    GameObject singletonObj = new GameObject("GameManager");
-                    _instance = singletonObj.AddComponent<GameManager>();
-                }
+                _instance = new GameManager();
+                //if (_instance == null)
+                //{
+                //    GameObject singletonObj = new GameObject("GameManager");
+                //    _instance = singletonObj.AddComponent<GameManager>();
+                //}
             }
             return _instance;
         }
     }
 
-    private void Awake()
-    {
-    }
-
-    void Start()
+    private GameManager()
     {
         isLive = true;
     }
 
-
-    void Update()
+    public void UpdateGame(float deltaTime)
     {
         if (!isLive)
             return;
 
-        score += Time.deltaTime * Constants.SSPEED;
+        score += deltaTime * Constants.SSPEED;
         globalSpeed = Constants.ORIGINSPEED + score * Constants.GSPEED;
         Debug.Log("Scroe" + score);
-
     }
-
+    
 
     public void GameOver()
     {
