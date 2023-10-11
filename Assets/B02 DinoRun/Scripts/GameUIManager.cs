@@ -7,7 +7,9 @@ using UnityEngine.UI;
 
 public class GameUIManager : MonoBehaviour
 {
+    //싱글톤 인스턴스
     private static GameUIManager _instance;
+    //게임 오버 텍스트
     public TextMeshProUGUI gameOverText;
     public static GameUIManager Instance
     {
@@ -26,6 +28,7 @@ public class GameUIManager : MonoBehaviour
         }
     }
 
+    //인스턴스 중복 체크
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -38,9 +41,10 @@ public class GameUIManager : MonoBehaviour
     }
     void Start()
     {
+        //게임 오버 텍스트 숨기기
         gameOverText.enabled = false;
     }
-
+    //게임 오버 텍스트 표시 메서드
     public void ShowGameOver()
     {
         gameOverText.enabled = true;
