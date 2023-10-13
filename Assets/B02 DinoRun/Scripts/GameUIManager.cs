@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class GameUIManager : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class GameUIManager : MonoBehaviour
     private static GameUIManager _instance;
     //게임 오버 텍스트
     public TextMeshProUGUI gameOverText;
-    public static GameUIManager Instance
+
+       public static GameUIManager Instance
     {
         get
         {
@@ -41,8 +43,10 @@ public class GameUIManager : MonoBehaviour
     }
     void Start()
     {
+       
         //게임 오버 텍스트 숨기기
         gameOverText.enabled = false;
+        
     }
     //게임 오버 텍스트 표시 메서드
     public void ShowGameOver()

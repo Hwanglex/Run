@@ -24,7 +24,19 @@ public class Dino : MonoBehaviour
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>(); // 리지드 바디 컴포넌트 초기화
+        if (rigid == null)
+        {
+            Debug.LogWarning("Rigidbody2D 컴포넌트가 연결되어 있지 않습니다.");
+                rigid = gameObject.AddComponent<Rigidbody2D>();
+            rigid.gravityScale = Constants.GRAVITISCALE;
+        }
         anim = GetComponent<Animator>(); //애니메이터 컴포넌트 초기화
+        if (anim == null)
+        {
+            Debug.LogWarning("Animator 컴포넌트가 연결되어 있지 않습니다.");
+            //    anim = gameObject.AddComponent<Animator>();
+         //out
+        }
 
         isGround = true;
         ChangeAnim(State.Run); //초기 애니메이션 설정
@@ -38,25 +50,53 @@ public class Dino : MonoBehaviour
             return;
         //점프 입력처리
         if (Input.GetButtonDown("Jump") && isGround)
-        {
-            rigid.AddForce(Vector2.up * Constants.STARTJUMPPOWER, ForceMode2D.Impulse); //점프 힘 적용
-            ChangeAnim(State.Jump); //점프 애니메이션 변경
-        }
-        if (Input.GetButton("Jump")) //점프키 누름 여부
+        
+        //rigid.AddForce(Vector2.up * Constants.STARTJUMPPOWER, ForceMode2D.Impulse); //점프 힘 적용
+        //ChangeAnim(State.Jump); //점프 애니메이션 변경
+        //if (Input.GetButton("Jump")) //점프키 누름 여부
             isJumpKey = true;
         else
             isJumpKey = false;
+    
+        //if (Input.GetButton("Jump")) //점프키 누름 여부
+        //    isJumpKey = true;
+        //else
+        //    isJumpKey = false;
 
     }
     void FixedUpdate()
     {
         if (!GameManager.Instance.IsLive)
             return;
-        if (isJumpKey && !isGround)
+
+        if (isJumpKey && isGround)
         {
-            jumpPower = Mathf.Lerp(jumpPower, Constants.ZERO, Constants.LERPPOWER);//점프 파워 감소
-            rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);//감소된 점프 파워 적용
+            rigid.velocity = new Vector2(rigid.velocity.x, Constants.STARTJUMPPOWER);
+            ChangeAnim(State.Jump);
+            //rigid.AddForce(Vector2.up * Constants.STARTJUMPPOWER, ForceMode2D.Impulse);
+            //isJumpKey = false;
         }
+
+        //if (isJumpKey && !isGround)
+        //{
+        //    jumpPower = Mathf.Lerp(jumpPower, Constants.ZERO, Constants.LERPPOWER);
+        //    rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+        //}
+
+        //if (Input.GetButtonDown("Jump") && isGround)
+        //{
+        //    rigid.AddForce(Vector2.up * Constants.STARTJUMPPOWER, ForceMode2D.Impulse); //점프 힘 적용
+        //    ChangeAnim(State.Jump); //점프 애니메이션 변경
+        //}
+        //if (Input.GetButton("Jump")) //점프키 누름 여부
+        //    isJumpKey = true;
+        //else
+        //    isJumpKey = false;
+        //if (isJumpKey && !isGround)
+        //{
+        //    jumpPower = Mathf.Lerp(jumpPower, Constants.ZERO, Constants.LERPPOWER);//점프 파워 감소
+        //    rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);//감소된 점프 파워 적용
+        //}
     }
 
     // 2. 착지 (물리 충돌 이벤트) 다른 물리 오브젝트와 계속해서 접촉하는 동안 호출
@@ -82,6 +122,12 @@ public class Dino : MonoBehaviour
     // 3. 장애물 터치 다른 콜리더에 닿았을 경우
     void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.CompareTag("Cloud"))
+        {
+            Destroy(collision.gameObject);
+
+            return;
+        }
         rigid.simulated = false; //물리 적용 중지
         ChangeAnim(State.Hit); // 애니메이션 Hit 변경
         GameManager.Instance.GameOver(); // 게임 오버 호출
