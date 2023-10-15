@@ -5,7 +5,7 @@ using UnityEngine;
 public class StarSpawner : MonoBehaviour
 {
     public GameObject starPrefab;
-    
+
 
 
     void Start()
@@ -15,11 +15,13 @@ public class StarSpawner : MonoBehaviour
 
     void SpawnStar()
     {
+        if (!GameManager.Instance.IsLive)
+            return;
         float randomYPosition = Random.Range(Constants.ONE, Constants.THREE); // Y 위치를 랜덤하게 선택
-        Vector2 spawnPosition = new Vector2( Constants.SPAWNPOSITION , randomYPosition);
+        Vector2 spawnPosition = new Vector2(Constants.SPAWNPOSITION, randomYPosition);
 
         Instantiate(starPrefab, spawnPosition, Quaternion.identity);
-       
+
     }
     void Update()
     {

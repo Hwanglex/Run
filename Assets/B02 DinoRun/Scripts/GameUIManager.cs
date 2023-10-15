@@ -12,8 +12,9 @@ public class GameUIManager : MonoBehaviour
     private static GameUIManager _instance;
     //게임 오버 텍스트
     public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI ScoreText;
 
-       public static GameUIManager Instance
+    public static GameUIManager Instance
     {
         get
         {
@@ -43,10 +44,16 @@ public class GameUIManager : MonoBehaviour
     }
     void Start()
     {
-       
+
         //게임 오버 텍스트 숨기기
         gameOverText.enabled = false;
-        
+        ScoreText.enabled = true;
+
+    }
+
+    void Update()
+    {
+        ScoreText.text = "Score: " + Score.Instance.GetScore().ToString("0");
     }
     //게임 오버 텍스트 표시 메서드
     public void ShowGameOver()

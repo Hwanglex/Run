@@ -17,7 +17,7 @@ public class Dino : MonoBehaviour
     private float jumpPower = Constants.JUMPPOWER;
     private bool isGround = false; //지면에 있는지 여부
     private bool isJumpKey = false; // 점프키 눌렀는지 여부
-   
+
 
     Rigidbody2D rigid; // 물리 컴포넌트
     Animator anim; //애니메이터 컴포넌트
@@ -27,7 +27,7 @@ public class Dino : MonoBehaviour
         if (rigid == null)
         {
             Debug.LogWarning("Rigidbody2D 컴포넌트가 연결되어 있지 않습니다.");
-                rigid = gameObject.AddComponent<Rigidbody2D>();
+            rigid = gameObject.AddComponent<Rigidbody2D>();
             rigid.gravityScale = Constants.GRAVITISCALE;
         }
         anim = GetComponent<Animator>(); //애니메이터 컴포넌트 초기화
@@ -35,7 +35,7 @@ public class Dino : MonoBehaviour
         {
             Debug.LogWarning("Animator 컴포넌트가 연결되어 있지 않습니다.");
             //    anim = gameObject.AddComponent<Animator>();
-         //out
+            //out
         }
 
         isGround = true;
@@ -50,14 +50,14 @@ public class Dino : MonoBehaviour
             return;
         //점프 입력처리
         if (Input.GetButtonDown("Jump") && isGround)
-        
-        //rigid.AddForce(Vector2.up * Constants.STARTJUMPPOWER, ForceMode2D.Impulse); //점프 힘 적용
-        //ChangeAnim(State.Jump); //점프 애니메이션 변경
-        //if (Input.GetButton("Jump")) //점프키 누름 여부
+
+            //rigid.AddForce(Vector2.up * Constants.STARTJUMPPOWER, ForceMode2D.Impulse); //점프 힘 적용
+            //ChangeAnim(State.Jump); //점프 애니메이션 변경
+            //if (Input.GetButton("Jump")) //점프키 누름 여부
             isJumpKey = true;
         else
             isJumpKey = false;
-    
+
         //if (Input.GetButton("Jump")) //점프키 누름 여부
         //    isJumpKey = true;
         //else
@@ -122,8 +122,10 @@ public class Dino : MonoBehaviour
     // 3. 장애물 터치 다른 콜리더에 닿았을 경우
     void OnTriggerEnter2D(Collider2D collision)
     {
+       
         if (collision.CompareTag("Cloud"))
         {
+            Score.Instance.AddStarScore();
             Destroy(collision.gameObject);
 
             return;
