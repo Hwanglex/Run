@@ -6,22 +6,22 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class Scroller : MonoBehaviour
 {
-    private float timeElapsed = 0;
-    private float SPEED_INCREMENT = 1;
-    private float globalSpeed; //전역 게임 속도
+    
+    private float globalSpeed = Constants.ONE; //전역 게임 속도
+    private float timeElapsed = Constants.TIMELAPSED;
    
-
+    
     void Update()
     {
         //게임이 비활성 리턴
         if (!GameManager.Instance.IsLive)
             return;
-       
+        Score.Instance.UpdateScore();
         timeElapsed += Time.deltaTime;
-        if (timeElapsed > 10)
+        if (timeElapsed > Constants.SCROLLERTEN)
         {
-            globalSpeed += SPEED_INCREMENT;  // 원하는 증가량을 SPEED_INCREMENT에 정의
-            timeElapsed = 0;  // 시간 초기화
+            globalSpeed += Constants.SPEEDINCREMENT;  // 원하는 증가량을 SPEED_INCREMENT에 정의
+            timeElapsed = Constants.ZERO;  // 시간 초기화
         }
         //Debug.Log("Scroe" + score);
         // 오브젝트 이동 로직
@@ -29,7 +29,8 @@ public class Scroller : MonoBehaviour
 
         float totalSpeed = globalSpeed * Constants.SPEEDRATE * Time.deltaTime * Constants.MSPEEDRATE;
         transform.Translate(totalSpeed, Constants.ZERO, Constants.ZERO);
-        //Debug.Log("totalspeed:" + totalSpeed);
+        
 
-    }
+}
+    
 }
