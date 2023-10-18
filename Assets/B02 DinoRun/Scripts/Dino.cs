@@ -13,7 +13,8 @@ public class Dino : MonoBehaviour
         Run,
         Hit
     }
-
+   
+    
     private float jumpPower = Constants.JUMPPOWER;
     private bool isGround = false; //지면에 있는지 여부
     private bool isJumpKey = false; // 점프키 눌렀는지 여부
@@ -51,17 +52,13 @@ public class Dino : MonoBehaviour
         //점프 입력처리
         if (Input.GetButtonDown("Jump") && isGround)
 
-            //rigid.AddForce(Vector2.up * Constants.STARTJUMPPOWER, ForceMode2D.Impulse); //점프 힘 적용
-            //ChangeAnim(State.Jump); //점프 애니메이션 변경
-            //if (Input.GetButton("Jump")) //점프키 누름 여부
+        
+       
             isJumpKey = true;
         else
             isJumpKey = false;
 
-        //if (Input.GetButton("Jump")) //점프키 누름 여부
-        //    isJumpKey = true;
-        //else
-        //    isJumpKey = false;
+       
 
     }
     void FixedUpdate()
@@ -73,30 +70,8 @@ public class Dino : MonoBehaviour
         {
             rigid.velocity = new Vector2(rigid.velocity.x, Constants.STARTJUMPPOWER);
             ChangeAnim(State.Jump);
-            //rigid.AddForce(Vector2.up * Constants.STARTJUMPPOWER, ForceMode2D.Impulse);
-            //isJumpKey = false;
+
         }
-
-        //if (isJumpKey && !isGround)
-        //{
-        //    jumpPower = Mathf.Lerp(jumpPower, Constants.ZERO, Constants.LERPPOWER);
-        //    rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-        //}
-
-        //if (Input.GetButtonDown("Jump") && isGround)
-        //{
-        //    rigid.AddForce(Vector2.up * Constants.STARTJUMPPOWER, ForceMode2D.Impulse); //점프 힘 적용
-        //    ChangeAnim(State.Jump); //점프 애니메이션 변경
-        //}
-        //if (Input.GetButton("Jump")) //점프키 누름 여부
-        //    isJumpKey = true;
-        //else
-        //    isJumpKey = false;
-        //if (isJumpKey && !isGround)
-        //{
-        //    jumpPower = Mathf.Lerp(jumpPower, Constants.ZERO, Constants.LERPPOWER);//점프 파워 감소
-        //    rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);//감소된 점프 파워 적용
-        //}
     }
 
     // 2. 착지 (물리 충돌 이벤트) 다른 물리 오브젝트와 계속해서 접촉하는 동안 호출
@@ -122,11 +97,12 @@ public class Dino : MonoBehaviour
     // 3. 장애물 터치 다른 콜리더에 닿았을 경우
     void OnTriggerEnter2D(Collider2D collision)
     {
-       
-        if (collision.CompareTag("Cloud"))
+        ObjectType objectType = collision.gameObject.GetComponent<ObjectType>();
+
+        if (objectType.mytype == ObjectType.Type.Cloud)
         {
-            Score.Instance.AddStarScore();
-            Destroy(collision.gameObject);
+            Score.Instance.UpdateScore(Constants.STARSCORE);
+            collision.gameObject.SetActive(false);
 
             return;
         }

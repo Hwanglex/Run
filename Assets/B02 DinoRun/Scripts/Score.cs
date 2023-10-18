@@ -5,15 +5,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class Score 
+public class Score
 {
-   
+
     private float score; // 현재 점수
     private static Score _instance; //싱글턴 인스턴스
 
     //싱글턴 패턴 구현
 
-    public static Score Instance
+    public static Score Instance//2싱글톤이 허접하다
     {
         get
         {
@@ -25,21 +25,18 @@ public class Score
             return _instance;
         }
     }
-    
-    public void UpdateScore()
+
+    public void UpdateScore(float score)
     {
         //게임이 비활성 리턴
         if (!GameManager.Instance.IsLive)
             return;
-        score += Time.deltaTime * Constants.SSPEED;//시간에 따라 점수 증가
+        this.score += score;
        
+
     }
 
-    
-    public void AddStarScore()
-    {
-        score += Constants.STARSCORE;
-    }
+
     public float GetScore() { return score; }
 
 

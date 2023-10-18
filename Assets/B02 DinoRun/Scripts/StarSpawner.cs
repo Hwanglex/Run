@@ -10,10 +10,10 @@ public class StarSpawner : MonoBehaviour
 
     void Start()
     {
-        InvokeRepeating("SpawnStar", Constants.ZERO, Constants.SPAWNLATE);
+        InvokeRepeating("SpawnCloud", Constants.ZERO, Constants.SPAWNLATE);
     }
 
-    void SpawnStar()
+    void SpawnCloud()
     {
         if (!GameManager.Instance.IsLive)
             return;
@@ -25,11 +25,6 @@ public class StarSpawner : MonoBehaviour
     }
     void Update()
     {
-        //float Speed = 3 * Constants.SPEEDRATE * Time.deltaTime * Constants.MSPEEDRATE;
-        //transform.Translate(Speed, Constants.ZERO, Constants.ZERO);
-        //if (transform.position.x > Constants.POSITION)
-        //    return;
-        //transform.Translate(Constants.REPOSITION, Constants.ZERO, Constants.ZERO, Space.Self);
     }
 
 }

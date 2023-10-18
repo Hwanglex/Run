@@ -14,7 +14,7 @@ public class StarMovement : MonoBehaviour
     {
         if (!GameManager.Instance.IsLive)
             return;
-        starTimeElapsed  += Time.deltaTime;
+        starTimeElapsed += Time.deltaTime;
         if (starTimeElapsed > Constants.SCROLLERTEN)
         {
             starGlobalSpeed += Constants.SPEEDINCREMENT;  // 원하는 증가량을 SPEED_INCREMENT에 정의
@@ -28,9 +28,5 @@ public class StarMovement : MonoBehaviour
 
         transform.Translate(starTotalSpeed, Constants.ZERO, Constants.ZERO); // X축으로 움직입니다.
 
-        //if (transform.position.x < someThreshold)  // someThreshold 값을 조절하여 별이 어디에서 사라질지 결정합니다.
-        //{
-        //    Destroy(gameObject);
-        //}
     }
 }

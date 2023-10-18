@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 
 public class GameManager
-{ 
+{
     private static GameManager _instance; //싱글턴 인스턴스
     private bool isLive = true; // 게임 진행 상태
     public bool IsLive { get { return isLive; } set { isLive = value; } } //게임 진행 상태 프로퍼티

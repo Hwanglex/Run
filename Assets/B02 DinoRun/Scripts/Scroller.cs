@@ -6,17 +6,17 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class Scroller : MonoBehaviour
 {
-    
+
     private float globalSpeed = Constants.ONE; //전역 게임 속도
     private float timeElapsed = Constants.TIMELAPSED;
-   
-    
+
+
     void Update()
     {
         //게임이 비활성 리턴
-        if (!GameManager.Instance.IsLive)
+        if (!GameManager.Instance.IsLive) //1
             return;
-        Score.Instance.UpdateScore();
+        Score.Instance.UpdateScore(Time.deltaTime * Constants.SSPEED);
         timeElapsed += Time.deltaTime;
         if (timeElapsed > Constants.SCROLLERTEN)
         {
@@ -29,8 +29,8 @@ public class Scroller : MonoBehaviour
 
         float totalSpeed = globalSpeed * Constants.SPEEDRATE * Time.deltaTime * Constants.MSPEEDRATE;
         transform.Translate(totalSpeed, Constants.ZERO, Constants.ZERO);
-        
 
-}
-    
+
+    }
+
 }
