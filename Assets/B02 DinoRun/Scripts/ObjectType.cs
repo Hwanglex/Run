@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectType : MonoBehaviour 
+public class ObjectType : MonoBehaviour
 {
-    
+
     public enum Type
     {
         Cloud,
@@ -12,5 +12,5 @@ public class ObjectType : MonoBehaviour
     }
 
     public Type mytype;
-    
+
 }

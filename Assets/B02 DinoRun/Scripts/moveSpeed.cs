@@ -10,6 +10,11 @@ public class StarMovement : MonoBehaviour
     //public float Threshold = -10f;
     // 별이 움직일 속도. 음수면 왼쪽으로 움직입니다.
 
+    private void Awake()
+    {
+        GameManager.Instance.OnGameOver.AddListener(StopMoveSpeed);
+    }
+
     void Update()
     {
         if (!GameManager.Instance.IsLive)
@@ -28,5 +33,9 @@ public class StarMovement : MonoBehaviour
 
         transform.Translate(starTotalSpeed, Constants.ZERO, Constants.ZERO); // X축으로 움직입니다.
 
+    }
+    public void StopMoveSpeed() 
+    {
+        this.enabled = false;
     }
 }

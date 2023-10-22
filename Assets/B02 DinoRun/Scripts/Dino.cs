@@ -13,8 +13,8 @@ public class Dino : MonoBehaviour
         Run,
         Hit
     }
-   
-    
+
+
     private float jumpPower = Constants.JUMPPOWER;
     private bool isGround = false; //지면에 있는지 여부
     private bool isJumpKey = false; // 점프키 눌렀는지 여부
@@ -41,30 +41,31 @@ public class Dino : MonoBehaviour
 
         isGround = true;
         ChangeAnim(State.Run); //초기 애니메이션 설정
+        GameManager.Instance.OnGameOver.AddListener(HandleGameOver);
 
     }
 
 
     void Update()
     {
-        if (!GameManager.Instance.IsLive) //게임 진행 X 반환
-            return;
+        //if (!GameManager.Instance.IsLive) //게임 진행 X 반환
+        //    return;
         //점프 입력처리
         if (Input.GetButtonDown("Jump") && isGround)
 
-        
-       
+
+
             isJumpKey = true;
         else
             isJumpKey = false;
 
-       
+
 
     }
     void FixedUpdate()
     {
-        if (!GameManager.Instance.IsLive)
-            return;
+        //if (!GameManager.Instance.IsLive)
+        //    return;
 
         if (isJumpKey && isGround)
         {
@@ -99,17 +100,17 @@ public class Dino : MonoBehaviour
     {
         ObjectType objectType = collision.gameObject.GetComponent<ObjectType>();
 
-        if (objectType.mytype == ObjectType.Type.Cloud)
+        if (objectType != null && objectType.mytype == ObjectType.Type.Cloud)
         {
             Score.Instance.UpdateScore(Constants.STARSCORE);
             collision.gameObject.SetActive(false);
 
             return;
         }
-        rigid.simulated = false; //물리 적용 중지
-        ChangeAnim(State.Hit); // 애니메이션 Hit 변경
+        //rigid.simulated = false; //물리 적용 중지
+        //ChangeAnim(State.Hit); // 애니메이션 Hit 변경
         GameManager.Instance.GameOver(); // 게임 오버 호출
-        GameUIManager.Instance.ShowGameOver(); //게임 오버 UI 호출
+        //GameUIManager.Instance.ShowGameOver(); //게임 오버 UI 호출
 
     }
 
@@ -119,4 +120,9 @@ public class Dino : MonoBehaviour
         anim.SetInteger("State", (int)state);//애니메이션 상태를 주어진 State로 변경
     }
 
+    private void HandleGameOver()
+    {
+        rigid.simulated = false;
+        ChangeAnim(State.Hit);
+    }
 }

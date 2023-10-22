@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour
 {
-   
+
     public GameObject cloudPrefab; // Cloud 오브젝트의 Prefab
 
-    
+
     private int poolSize = 10; // 풀의 크기
 
-    private GameObject[] cloudPool; // Cloud 오브젝트를 저장할 배열
+    private GameObject[] cloudPool;
+    // Cloud 오브젝트를 저장할 배열
 
+  
     private void Start()
     {
         // 오브젝트 풀 초기화
         InitializePool();
         InvokeRepeating("SpawnCloud", Constants.ZERO, Constants.SPAWNLATE);
-        
+
 
     }
 
@@ -51,8 +53,7 @@ public class ObjectPooler : MonoBehaviour
     }
     void SpawnCloud()
     {
-        if (!GameManager.Instance.IsLive)
-            return;
+       
         float randomYPosition = Random.Range(Constants.ONE, Constants.THREE); // Y 위치를 랜덤하게 선택
         Vector2 spawnPosition = new Vector2(Constants.SPAWNPOSITION, randomYPosition);
 
@@ -64,4 +65,6 @@ public class ObjectPooler : MonoBehaviour
         }
 
     }
+
+    
 }

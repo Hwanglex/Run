@@ -11,11 +11,16 @@ public class Scroller : MonoBehaviour
     private float timeElapsed = Constants.TIMELAPSED;
 
 
+    private void Awake()
+    {
+        GameManager.Instance.OnGameOver.AddListener(StopScrolling);
+    }
+
     void Update()
     {
         //게임이 비활성 리턴
-        if (!GameManager.Instance.IsLive) //1
-            return;
+        //if (!GameManager.Instance.IsLive) //1
+        //    return;
         Score.Instance.UpdateScore(Time.deltaTime * Constants.SSPEED);
         timeElapsed += Time.deltaTime;
         if (timeElapsed > Constants.SCROLLERTEN)
@@ -33,4 +38,8 @@ public class Scroller : MonoBehaviour
 
     }
 
+    void StopScrolling()
+    {
+        this.enabled = false;
+    }
 }
