@@ -13,7 +13,6 @@ public class Score : MonoBehaviour
 
     //싱글턴 패턴 구현
 
-  
     public static Score Instance
     {
         get
@@ -41,35 +40,20 @@ public class Score : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
         GameManager.Instance.OnGameOver.AddListener(StopUpdatingScore);
     }
-    //인스턴스 중복 체크
-   
-    //public static Score Instance//2싱글톤이 허접하다
-    //{
-    //    get
-    //    {
-    //        if (_instance == null) //인스턴스 생성되지 않았다면
-    //        {
-    //            _instance = new Score(); // 새 인스턴스 생성
-
-    //        }
-    //        return _instance;
-    //    }
-    //}
 
     public void UpdateScore(float score)
     {
-        //게임이 비활성 리턴
-       
+      
         this.score += score;
-
+       
 
     }
 
 
     public float GetScore() { return score; }
-
     void StopUpdatingScore()
     {
         this.enabled = false;
     }
+
 }

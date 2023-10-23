@@ -3,39 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class StarMovement : MonoBehaviour
-{
-    private float starTimeElapsed = Constants.TIMELAPSED;
-    private float starGlobalSpeed = Constants.ONE;
-    //public float Threshold = -10f;
-    // 별이 움직일 속도. 음수면 왼쪽으로 움직입니다.
+public class CloudMovement : MonoBehaviour
 
+
+
+{
+    public float speed = 2.0f;  // 구름의 이동 속도. 기존에 있던 속도 변수입니다.
+    private Vector2 screenBounds;   // 화면의 경계값
     private void Awake()
     {
         GameManager.Instance.OnGameOver.AddListener(StopMoveSpeed);
     }
-
-    void Update()
+    private void Start()
     {
-        if (!GameManager.Instance.IsLive)
-            return;
-        starTimeElapsed += Time.deltaTime;
-        if (starTimeElapsed > Constants.SCROLLERTEN)
-        {
-            starGlobalSpeed += Constants.SPEEDINCREMENT;  // 원하는 증가량을 SPEED_INCREMENT에 정의
-            starTimeElapsed = Constants.ZERO;  // 시간 초기화
-        }
-        //Debug.Log("Scroe" + score);
-        // 오브젝트 이동 로직
-
-
-        float starTotalSpeed = starGlobalSpeed * Constants.SPEEDRATE * Time.deltaTime * Constants.MSPEEDRATE;
-
-        transform.Translate(starTotalSpeed, Constants.ZERO, Constants.ZERO); // X축으로 움직입니다.
-
+        // 화면의 왼쪽 경계값을 얻습니다.
+        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, Camera.main.transform.position.z));
     }
-    public void StopMoveSpeed() 
+
+    private void Update()
+    {
+        // 구름을 왼쪽으로 이동시킵니다. 이 부분은 기존에 있던 코드를 그대로 사용합니다.
+        transform.Translate(Vector2.left * speed * Time.deltaTime);
+
+        // 구름의 위치가 화면 왼쪽 경계보다 작으면 오브젝트를 비활성화합니다.
+        if (transform.position.x < screenBounds.x - 1)  // -1은 구름의 너비에 따라 조절해야 할 수 있습니다.
+        {
+            // 구름을 오브젝트 풀로 반환합니다.
+            gameObject.SetActive(false);
+        }
+    }
+    public void StopMoveSpeed()
     {
         this.enabled = false;
     }
 }
+
+
