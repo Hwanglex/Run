@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,14 +19,15 @@ public class Score : MonoBehaviour
         get
         {
             if (_instance == null)
-            {
-                _instance = FindObjectOfType<Score>();
-                if (_instance == null)
                 {
-                    GameObject obj = new GameObject();
-                    _instance = obj.AddComponent<Score>();
+                    _instance = FindObjectOfType<Score>();
+                    if (_instance == null)
+                    {
+                        GameObject obj = new GameObject("Score");
+                        _instance = obj.AddComponent<Score>();
+                    }
                 }
-            }
+            
             return _instance;
         }
     }
@@ -33,22 +35,24 @@ public class Score : MonoBehaviour
     {
         if (_instance != null && _instance != this)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
+            return;
+        }
+        if (this.gameObject.name != "Score")
+        {
+            Destroy(this);
             return;
         }
         _instance = this;
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(gameObject);
         GameManager.Instance.OnGameOver.AddListener(StopUpdatingScore);
     }
 
     public void UpdateScore(float score)
     {
-      
         this.score += score;
        
-
     }
-
 
     public float GetScore() { return score; }
     void StopUpdatingScore()

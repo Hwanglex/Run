@@ -7,7 +7,7 @@ public class Cloud : MonoBehaviour
     public enum Type
     {
         Cloud,
-        Catus
+        Cactus
     }
 
     private Type mytype;

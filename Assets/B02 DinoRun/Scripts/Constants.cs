@@ -9,6 +9,7 @@ public class Constants
     public const float JUMPPOWER = 1f;
     public const float LERPPOWER = 0.1f;
     public const float ZERO = 0;
+    public const int INTZERO = 0;
     public const float ONE = 1f;
     public const float THREE = 3f;
     public const float ORIGINSPEED = 3f;
@@ -26,4 +27,6 @@ public class Constants
     public const float SPEEDINCREMENT = 1;
     public const float SCROLLERTEN = 10;
     public const float STARSCORE = 10;
+    public const float POOLSIZE = 50;
+    public const float SPEED = 2.0f;
 }

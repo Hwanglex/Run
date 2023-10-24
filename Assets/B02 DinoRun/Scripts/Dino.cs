@@ -14,11 +14,9 @@ public class Dino : MonoBehaviour
         Hit
     }
    
-    
     private float jumpPower = Constants.JUMPPOWER;
     private bool isGround = false; //지면에 있는지 여부
     private bool isJumpKey = false; // 점프키 눌렀는지 여부
-
 
     Rigidbody2D rigid; // 물리 컴포넌트
     Animator anim; //애니메이터 컴포넌트
@@ -34,43 +32,28 @@ public class Dino : MonoBehaviour
         anim = GetComponent<Animator>(); //애니메이터 컴포넌트 초기화
         if (anim == null)
         {
-            Debug.LogWarning("Animator 컴포넌트가 연결되어 있지 않습니다.");
-            //    anim = gameObject.AddComponent<Animator>();
-            //out
+            Debug.LogWarning("Animator 컴포넌트가 연결되어 있지 않습니다.");         
         }
-
         isGround = true;
+        GameManager.Instance.OnGameOver.AddListener(HandleGameOver);
+
         ChangeAnim(State.Run); //초기 애니메이션 설정
 
     }
 
-
     void Update()
     {
-        if (!GameManager.Instance.IsLive) //게임 진행 X 반환
-            return;
-        //점프 입력처리
         if (Input.GetButtonDown("Jump") && isGround)
-
-        
-       
             isJumpKey = true;
         else
             isJumpKey = false;
-
-       
-
     }
     void FixedUpdate()
     {
-        if (!GameManager.Instance.IsLive)
-            return;
-
         if (isJumpKey && isGround)
         {
             rigid.velocity = new Vector2(rigid.velocity.x, Constants.STARTJUMPPOWER);
             ChangeAnim(State.Jump);
-
         }
     }
 
@@ -106,11 +89,9 @@ public class Dino : MonoBehaviour
 
             return;
         }
-        rigid.simulated = false; //물리 적용 중지
-        ChangeAnim(State.Hit); // 애니메이션 Hit 변경
-        GameManager.Instance.GameOver(); // 게임 오버 호출
-        GameUIManager.Instance.ShowGameOver(); //게임 오버 UI 호출
 
+        GameManager.Instance.GameOver();
+        
     }
 
     //애니메이션 상태 변경 메서드
@@ -118,5 +99,9 @@ public class Dino : MonoBehaviour
     {
         anim.SetInteger("State", (int)state);//애니메이션 상태를 주어진 State로 변경
     }
-
+    private void HandleGameOver()
+    {
+        gameObject.SetActive(false);
+        ChangeAnim(State.Hit);
+    }
 }

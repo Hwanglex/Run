@@ -21,7 +21,6 @@ public class ObjectType : MonoBehaviour
 
         if(isType(Type.Cloud) is true)
         {
-           
         }
 
     }
@@ -34,6 +33,11 @@ public class ObjectType : MonoBehaviour
     public bool isCloud()
     {
         return myType == Type.Cloud;
+    }
+
+    public bool isCatus()
+    {
+        return myType == Type.Catus;
     }
 
 }

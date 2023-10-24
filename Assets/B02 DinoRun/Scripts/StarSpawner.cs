@@ -19,7 +19,6 @@ public class StarSpawner : MonoBehaviour
     }
     void SpawnCloud()
     {
-       
         float randomYPosition = Random.Range(Constants.ONE, Constants.THREE); // Y 위치를 랜덤하게 선택
         Vector2 spawnPosition = new Vector2(Constants.SPAWNPOSITION, randomYPosition);
 
@@ -29,7 +28,6 @@ public class StarSpawner : MonoBehaviour
             Cloud.transform.position = spawnPosition;
             Cloud.SetActive(true);
         }
-        
     }
 
     private void StopSpawner()
