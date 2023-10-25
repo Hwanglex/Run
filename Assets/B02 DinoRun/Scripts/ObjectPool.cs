@@ -20,6 +20,13 @@ public class ObjectPooler : MonoBehaviour
     private void InitializePool()
     {
         cloudPool = new List<GameObject>();
+
+        if (cloudPrefab == null)
+        {
+            Debug.LogWarning("Prefab 연결이 제대로 되어 있지 않습니다.");
+            GameManager.Instance.GameOver();
+
+        }
         for (int i = zero; i < poolSize; i++)
         {
             GameObject obj = Instantiate(cloudPrefab, transform);//예외 처리

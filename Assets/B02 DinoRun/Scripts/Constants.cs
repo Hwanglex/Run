@@ -20,7 +20,7 @@ public class Constants
     public const float SPEEDRATE = 1;
     public const float MSPEEDRATE = -1f;
     public const float GRAVITISCALE = 3.0f;
-    public const float MOVESPEED = -5;   // 구름이 움직일 속도. 음수면 왼쪽으로 움직입니다.
+    public const float MOVESPEED = -5;   // 구름이 움직일 속도. 음수면 왼쪽
     public const float SPAWNPOSITION = 6; //구름이 생성되는 위치
     public const float SPAWNLATE = 0.1f; //구름이 생성되는 주기
     public const float TIMELAPSED = 0;
